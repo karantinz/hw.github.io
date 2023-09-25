@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from "react";
 
 export const HW3 = () => {
   // 1️⃣ Раскомментируйте JSX(HW3.tsx) и вы увидите,
@@ -9,46 +9,51 @@ export const HW3 = () => {
   // - дописать функциональность (где указано комментариями)
   // - приложение должно компилироваться и запускаться в браузере
 
-
-  const [currentText, setCurrentText] = useState('');
+  const [currentText, setCurrentText] = useState("");
   const [texts, setTexts] = useState<string[]>([
-    'То, что вы делаете по ночам, то и делает вас богатым. (Аль Капоне)',
+    "То, что вы делаете по ночам, то и делает вас богатым. (Аль Капоне)",
   ]);
 
-  const handleChange = (event: 'НУЖНО ПРОТИПИЗИРОВАТЬ') => {
-    // setCurrentText(ЧЕГО-ТО НЕ ХВАТАЕТ);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // 'НУЖНО ПРОТИПИЗИРОВАТЬ'
+    setCurrentText(event.currentTarget.value); // setCurrentText(ЧЕГО-ТО НЕ ХВАТАЕТ);
   };
 
-  const handleSave = () => {
-    // ЗАСЕТАТЬ БЫ ТЕКСТ В texts И НЕ ПОТЕРЯТЬ НАПУТСТВИЕ ИЗ ПРОШЛОГО ВЕКА)
-    // А ЗАТЕМ УБРАТЬ ЗА СОБОЙ В currentText
+  const handleSave = (text: string) => {
+    setTexts([...texts, text]); // ЗАСЕТАТЬ БЫ ТЕКСТ В texts И НЕ ПОТЕРЯТЬ НАПУТСТВИЕ ИЗ ПРОШЛОГО ВЕКА)
+    setCurrentText(""); // А ЗАТЕМ УБРАТЬ ЗА СОБОЙ В currentText
   };
 
   return (
-    <div id={'hw03'}>
-      {/*{currentText ? (*/}
-      {/*  <h1 id={'hw03-text'}>ЗДЕСЬ ХОТЕЛОСЬ БЫ УВИДЕТЬ ВВОДИМЫЙ ТЕКСТ</h1>*/}
-      {/*) : (*/}
-      {/*  <h1 id={'hw03-default-text'}>Здесь появится новое дело</h1> // ничего не меняем, здесь все норм*/}
-      {/*)}*/}
+    <div id={"hw03"}>
+      {currentText ? (
+        <h1 id={"hw03-text"}>{currentText}</h1> // ЗДЕСЬ ХОТЕЛОСЬ БЫ УВИДЕТЬ ВВОДИМЫЙ ТЕКСТ
+      ) : (
+        <h1 id={"hw03-default-text"}>Здесь появится новое дело</h1> // ничего не меняем, здесь все норм
+      )}
 
-      {/*<input id={'hw03-input'} type="text" value={currentText} onChange={handleChange} />*/}
+      <input
+        id={"hw03-input"}
+        type="text"
+        value={currentText}
+        onChange={handleChange}
+      />
 
-      {/*<button id={'hw03-button'} onClick={() => {}}> // НЕ ХВАТАТЕТ ФУНКЦИИ*/}
-      {/*  Сохранить*/}
-      {/*</button>*/}
+      <button id={"hw03-button"} onClick={() => handleSave(currentText)}>
+        Сохранить
+      </button>
 
-      {/*<h1 style={{ marginTop: '50px' }}>СПИСОК ДЕЛ НА ДЕНЬ:</h1>*/}
+      <h1 style={{ marginTop: "50px" }}>СПИСОК ДЕЛ НА ДЕНЬ:</h1>
 
-      {/*<ol id={'hw03-tasks'}>*/}
-      {/*  {ОТРИСОВАТЬ МАССИВ.map((el, index) => {*/}
-      {/*    return (*/}
-      {/*      <li key={index} id={`hw03-task-${index}`}>*/}
-      {/*        {el}*/}
-      {/*      </li>*/}
-      {/*    );*/}
-      {/*  })}*/}
-      {/*</ol>*/}
+      <ol id={"hw03-tasks"}>
+        {texts.map((el, index) => {
+          return (
+            <li key={index} id={`hw03-task-${index}`}>
+              {el}
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 };
